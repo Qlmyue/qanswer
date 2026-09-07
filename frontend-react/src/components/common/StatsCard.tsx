@@ -17,12 +17,12 @@ export function StatsCard({ title, value, icon: Icon, color = "#6366f1", trend }
       animate={{ opacity: 1, y: 0 }}
       whileHover={{ y: -4, scale: 1.02 }}
       transition={{ duration: 0.2 }}
-      className="relative overflow-hidden rounded-2xl border bg-card p-6 shadow-soft transition-all duration-300 hover:shadow-soft-lg"
+      className="app-card relative overflow-hidden rounded-2xl p-5 transition-all duration-300 hover:shadow-lg"
     >
       <div className="flex items-start justify-between">
         <div className="flex flex-col gap-2">
-          <span className="text-sm font-medium text-muted-foreground">{title}</span>
-          <span className="text-3xl font-bold tracking-tight text-foreground">{value}</span>
+          <span className="text-[11px] font-semibold text-muted-foreground">{title}</span>
+          <span className="text-[27px] font-extrabold tracking-tight text-foreground">{value}</span>
           {trend !== undefined && (
             <div
               className={cn(
@@ -35,16 +35,16 @@ export function StatsCard({ title, value, icon: Icon, color = "#6366f1", trend }
           )}
         </div>
         <div
-          className="flex h-14 w-14 items-center justify-center rounded-2xl"
+          className="flex h-11 w-11 items-center justify-center rounded-xl"
           style={{
             background: `color-mix(in srgb, ${color} 15%, transparent)`,
             color: color,
           }}
         >
-          <Icon className="h-7 w-7" />
+          <Icon className="h-5 w-5" />
         </div>
       </div>
-      <div className="absolute bottom-0 left-0 right-0 h-1">
+      <div className="absolute bottom-0 left-0 right-0 h-[3px]">
         <div
           className="h-full"
           style={{

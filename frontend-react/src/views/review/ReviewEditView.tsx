@@ -1,14 +1,13 @@
 import { useEffect, useState } from "react"
 import { useNavigate, useParams } from "react-router-dom"
 import { motion } from "framer-motion"
-import { ArrowLeft, Save, Plus, X } from "lucide-react"
+import { ArrowLeft, Save, X } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import { Textarea } from "@/components/ui/textarea"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { useReviewStore } from "@/stores/reviewStore"
+import { RichTextEditor } from "@/components/common/RichTextEditor"
 
 export function ReviewEditView() {
   const navigate = useNavigate()
@@ -146,11 +145,10 @@ export function ReviewEditView() {
             <CardTitle>答案</CardTitle>
           </CardHeader>
           <CardContent>
-            <Textarea
-              value={form.answer}
-              onChange={(e) => setForm({ ...form, answer: e.target.value })}
-              placeholder="请输入答案内容，支持Markdown格式..."
-              className="min-h-[300px]"
+            <RichTextEditor
+              content={form.answer}
+              onChange={(answer) => setForm((current) => ({ ...current, answer }))}
+              placeholder="请输入答案内容，使用工具栏让表达更清晰…"
             />
           </CardContent>
         </Card>

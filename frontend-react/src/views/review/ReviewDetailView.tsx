@@ -1,4 +1,5 @@
-import { useEffect, useState } from "react"
+import { useEffect } from "react"
+import DOMPurify from "dompurify"
 import { useNavigate, useParams } from "react-router-dom"
 import { motion } from "framer-motion"
 import {
@@ -65,6 +66,12 @@ export function ReviewDetailView() {
       </div>
     )
   }
+
+  const renderedAnswer = DOMPurify.sanitize(
+    currentReviewPoint.answer.includes("<")
+      ? currentReviewPoint.answer
+      : currentReviewPoint.answer.replace(/\n/g, "<br />")
+  )
 
   return (
     <div className="mx-auto max-w-4xl space-y-6">
@@ -174,11 +181,7 @@ export function ReviewDetailView() {
               </div>
               <h2 className="text-lg font-semibold text-foreground">答案</h2>
             </div>
-            <div className="prose prose-slate max-w-none text-foreground">
-              <div className="whitespace-pre-wrap leading-relaxed">
-                {currentReviewPoint.answer}
-              </div>
-            </div>
+            <div className="rich-text-content min-h-0 p-0" dangerouslySetInnerHTML={{ __html: renderedAnswer }} />
           </CardContent>
         </Card>
       </motion.div>

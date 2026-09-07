@@ -13,8 +13,8 @@ export function LoginView() {
   const { login, loading, error } = useAuthStore()
 
   const [form, setForm] = useState({
-    username: "",
-    password: "",
+    username: "preview_demo",
+    password: "Preview2026!",
   })
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -195,8 +195,8 @@ export function LoginView() {
                     测试账号
                   </p>
                   <p className="text-sm">
-                    用户名: <strong>demo</strong>，密码:{" "}
-                    <strong>Demo123456</strong>
+                    用户名: <strong>preview_demo</strong>，密码:{" "}
+                    <strong>Preview2026!</strong>
                   </p>
                 </div>
               </CardContent>

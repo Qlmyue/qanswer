@@ -4,11 +4,11 @@ import { motion } from "framer-motion"
 import { ArrowLeft, HelpCircle, Edit, Link, Tag, Plus, X, Check } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
 import { Textarea } from "@/components/ui/textarea"
 import { Card, CardContent } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { useReviewStore } from "@/stores/reviewStore"
+import { RichTextEditor } from "@/components/common/RichTextEditor"
 import type { AnswerSource } from "@/types"
 
 export function ReviewCreateView() {
@@ -130,11 +130,10 @@ export function ReviewCreateView() {
                 <p className="text-sm text-muted-foreground">可手动填写答案，留空则自动生成AI答案</p>
               </div>
             </div>
-            <Textarea
-              value={form.answer}
-              onChange={(e) => setForm({ ...form, answer: e.target.value })}
-              placeholder="请输入答案内容（可选），留空将自动生成AI答案..."
-              className="min-h-[300px]"
+            <RichTextEditor
+              content={form.answer}
+              onChange={(answer) => setForm((current) => ({ ...current, answer }))}
+              placeholder="请输入答案内容（可选），留空将自动生成 AI 答案…"
             />
           </CardContent>
         </Card>

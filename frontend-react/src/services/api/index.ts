@@ -6,7 +6,9 @@ import axios from 'axios'
 
 // Create axios instance
 const apiClient = axios.create({
-  baseURL: 'http://localhost:8000/api',
+  // Use Vite's same-origin proxy in development. This avoids a CORS failure
+  // when the app is opened through 127.0.0.1 instead of localhost.
+  baseURL: import.meta.env.VITE_API_BASE_URL || '/api',
   timeout: 60000,
   headers: {
     'Content-Type': 'application/json'
@@ -37,10 +39,17 @@ apiClient.interceptors.response.use(
       const { status, data } = error.response
 
       if (status === 401) {
-        // Token expired or invalid, clear local storage and redirect to login
+        // Token expired or invalid: fully clear auth state.
+        // Clearing ONLY 'token'/'user' leaves the zustand persist storage
+        // ('auth-storage') intact, so isAuthenticated stays true and the
+        // router loops between /dashboard and /login forever (page flicker).
+        localStorage.removeItem('auth-storage')
         localStorage.removeItem('token')
         localStorage.removeItem('user')
-        window.location.href = '/login'
+        // Avoid a redirect loop when already on the login page.
+        if (window.location.pathname !== '/login') {
+          window.location.href = '/login'
+        }
       }
 
       return Promise.reject(data)

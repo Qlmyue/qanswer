@@ -42,27 +42,28 @@ export function DashboardView() {
   const formatRate = (rate: number) => Math.round(rate * 100) + "%"
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-7">
       {/* Welcome section */}
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        className="gradient-primary rounded-2xl p-8 text-white"
+        className="gradient-primary relative overflow-hidden rounded-[22px] p-7 text-white shadow-xl shadow-indigo-500/15 md:p-8"
       >
-        <div className="flex items-center justify-between">
+        <div className="absolute -right-16 -top-48 h-[320px] w-[320px] rounded-full border border-white/20" />
+        <div className="absolute -right-1 bottom-[-110px] h-[240px] w-[240px] rounded-full border border-white/15" />
+        <div className="relative flex items-center justify-between gap-5">
           <div>
-            <h1 className="mb-2 text-3xl font-bold">欢迎回来 👋</h1>
-            <p className="text-lg opacity-90">
-              继续你的面试准备之旅，每天进步一点点
-            </p>
+            <p className="mb-3 font-mono text-[10px] font-medium tracking-[.16em] text-white/70">YOUR INTERVIEW JOURNEY</p>
+            <h1 className="mb-2 text-2xl font-extrabold tracking-tight md:text-3xl">早上好，继续保持节奏 <span className="text-lg">✦</span></h1>
+            <p className="text-sm text-white/85">每一次认真复盘，都会让你的表达更接近理想。</p>
           </div>
           <Button
             size="lg"
-            className="h-12 bg-white text-primary hover:bg-white/90"
+            className="h-11 shrink-0 bg-white px-5 text-primary hover:bg-white/90"
             onClick={() => navigate("/review")}
           >
             <Plus className="mr-2 h-5 w-5" />
-            新建复盘点
+            <span className="hidden sm:inline">记录一次面试</span><span className="sm:hidden">记录</span>
           </Button>
         </div>
       </motion.div>
@@ -73,7 +74,7 @@ export function DashboardView() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.1 }}
-          className="grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-4"
+          className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-4"
         >
           <StatsCard
             title="总复盘点"
@@ -109,9 +110,9 @@ export function DashboardView() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.2 }}
         >
-          <h2 className="mb-4 flex items-center gap-2 text-lg font-semibold text-foreground">
-            <Calendar className="h-5 w-5 text-primary" />
-            今日任务
+          <h2 className="mb-4 flex items-center gap-2 text-[15px] font-bold tracking-tight text-foreground">
+            <Calendar className="h-4 w-4 text-primary" />
+            今日待办
           </h2>
           <div className="grid grid-cols-1 gap-5 md:grid-cols-2">
             {/* Daily Challenge */}
@@ -119,15 +120,15 @@ export function DashboardView() {
               className="cursor-pointer transition-all duration-300 hover:-translate-y-1 hover:shadow-lg"
               onClick={() => navigate("/challenge")}
             >
-              <CardContent className="flex items-center gap-5 p-6">
-                <div className="flex h-16 w-16 flex-shrink-0 items-center justify-center rounded-2xl bg-amber-500/10 text-amber-500">
-                  <Trophy className="h-8 w-8" />
+              <CardContent className="flex items-center gap-4 p-5">
+                <div className="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-xl bg-amber-500/10 text-amber-500">
+                  <Trophy className="h-6 w-6" />
                 </div>
                 <div className="min-w-0 flex-1">
-                  <h3 className="mb-1 text-lg font-semibold text-foreground">
+                  <h3 className="mb-1 text-[15px] font-bold text-foreground">
                     每日考核
                   </h3>
-                  <p className="mb-3 text-sm text-muted-foreground">
+                  <p className="mb-3 text-xs text-muted-foreground">
                     从复盘点中随机抽取问题，检验学习成果
                   </p>
                   <div className="flex items-center gap-2">
@@ -162,15 +163,15 @@ export function DashboardView() {
               className="cursor-pointer transition-all duration-300 hover:-translate-y-1 hover:shadow-lg"
               onClick={() => navigate("/practice")}
             >
-              <CardContent className="flex items-center gap-5 p-6">
-                <div className="flex h-16 w-16 flex-shrink-0 items-center justify-center rounded-2xl bg-primary/10 text-primary">
-                  <PenLine className="h-8 w-8" />
+              <CardContent className="flex items-center gap-4 p-5">
+                <div className="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-xl bg-primary/10 text-primary">
+                  <PenLine className="h-6 w-6" />
                 </div>
                 <div className="min-w-0 flex-1">
-                  <h3 className="mb-1 text-lg font-semibold text-foreground">
+                  <h3 className="mb-1 text-[15px] font-bold text-foreground">
                     每日练习
                   </h3>
-                  <p className="mb-3 text-sm text-muted-foreground">
+                  <p className="mb-3 text-xs text-muted-foreground">
                     每天一道新的面试题，扩展知识面
                   </p>
                   <div className="flex items-center gap-2">
@@ -211,8 +212,8 @@ export function DashboardView() {
           transition={{ delay: 0.3 }}
         >
           <div className="mb-4 flex items-center justify-between">
-            <h2 className="flex items-center gap-2 text-lg font-semibold text-foreground">
-              <Clock className="h-5 w-5 text-primary" />
+            <h2 className="flex items-center gap-2 text-[15px] font-bold tracking-tight text-foreground">
+              <Clock className="h-4 w-4 text-primary" />
               最近复盘点
             </h2>
             <Button
