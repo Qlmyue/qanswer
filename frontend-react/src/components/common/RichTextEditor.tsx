@@ -10,10 +10,14 @@ interface RichTextEditorProps {
   content: string
   onChange: (html: string) => void
   placeholder?: string
+  /** Controlled fullscreen. When provided, the component is locked to that mode and fills its parent. */
+  fullscreen?: boolean
 }
 
-export function RichTextEditor({ content, onChange, placeholder = "在这里写下你的回答…" }: RichTextEditorProps) {
-  const [isFullscreen, setIsFullscreen] = useState(false)
+export function RichTextEditor({ content, onChange, placeholder = "在这里写下你的回答…", fullscreen }: RichTextEditorProps) {
+  const [internalFullscreen, setInternalFullscreen] = useState(false)
+  const isFullscreen = fullscreen ?? internalFullscreen
+  const setIsFullscreen = fullscreen !== undefined ? () => {} : setInternalFullscreen
   const editor = useEditor({
     extensions: [
       StarterKit.configure({ heading: { levels: [2, 3] } }),
@@ -50,7 +54,9 @@ export function RichTextEditor({ content, onChange, placeholder = "在这里写�
     { label: "高亮", icon: Highlighter, run: () => editor.chain().focus().toggleHighlight().run(), active: editor.isActive("highlight") },
   ]
 
-  return <div className={`rich-text-editor ${isFullscreen ? "is-fullscreen" : ""}`}>
+  const fullscreenClass = fullscreen !== undefined ? "is-page-fullscreen" : isFullscreen ? "is-fullscreen" : ""
+
+  return <div className={`rich-text-editor ${fullscreenClass}`}>
     <div className="rich-text-toolbar" aria-label="文本格式工具栏">
       <button type="button" className={editor.isActive("heading", { level: 2 }) ? "is-active" : ""} onClick={() => editor.chain().focus().toggleHeading({ level: 2 }).run()}>标题</button>
       <span className="rich-text-divider" />
@@ -65,7 +71,7 @@ export function RichTextEditor({ content, onChange, placeholder = "在这里写�
       <button type="button" title="撤销" aria-label="撤销" disabled={!editor.can().undo()} onClick={() => editor.chain().focus().undo().run()}><Undo2 /></button>
       <button type="button" title="重做" aria-label="重做" disabled={!editor.can().redo()} onClick={() => editor.chain().focus().redo().run()}><Redo2 /></button>
       <span className="rich-text-toolbar-spacer" />
-      <button type="button" title={isFullscreen ? "退出全屏（Esc）" : "全屏编辑"} aria-label={isFullscreen ? "退出全屏" : "全屏编辑"} onClick={() => setIsFullscreen((value) => !value)}>{isFullscreen ? <Minimize2 /> : <Maximize2 />}</button>
+      {fullscreen === undefined && <button type="button" title={isFullscreen ? "退出全屏（Esc）" : "全屏编辑"} aria-label={isFullscreen ? "退出全屏" : "全屏编辑"} onClick={() => setIsFullscreen((value) => !value)}>{isFullscreen ? <Minimize2 /> : <Maximize2 />}</button>}
     </div>
     <EditorContent editor={editor} />
     <div className="rich-text-footer"><span>支持常用快捷键与粘贴格式</span><span>{editor.getText().replace(/\s/g, "").length} 字</span></div>
