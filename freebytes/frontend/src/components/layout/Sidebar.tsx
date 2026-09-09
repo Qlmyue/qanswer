@@ -5,7 +5,7 @@ import { Search, Tag, TrendingUp, MessageCircle } from 'lucide-react'
 import { useSiteStore } from '@/stores/siteStore'
 import { usePostStore } from '@/stores/postStore'
 import { formatDate } from '@/utils/date'
-import type { BlogPost, Tag as TagType } from '@/types'
+import type { BlogPost } from '@/types'
 
 export default function Sidebar() {
   const store = useSiteStore()
