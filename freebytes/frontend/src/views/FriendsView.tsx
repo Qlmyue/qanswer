@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
-import { Link2, Plus } from 'lucide-react'
+import { Plus } from 'lucide-react'
 import FriendLinks from '@/components/social/FriendLinks'
 import type { FriendLink } from '@/types'
 import { friendApi } from '@/services'

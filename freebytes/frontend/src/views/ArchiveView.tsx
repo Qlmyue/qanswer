@@ -1,7 +1,7 @@
 import { useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
-import { Calendar, FileText } from 'lucide-react'
+import { Calendar } from 'lucide-react'
 import { usePostStore } from '@/stores/postStore'
 import { formatDate, getYear } from '@/utils/date'
 
@@ -65,7 +65,7 @@ export default function ArchiveView() {
               </h2>
 
               <div className="space-y-2">
-                {postsByYear[year].map((post, index) => (
+                {postsByYear[year].map((post) => (
                   <Link
                     key={post.id}
                     to={`/post/${post.slug}`}

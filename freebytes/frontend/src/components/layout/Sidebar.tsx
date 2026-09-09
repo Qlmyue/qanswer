@@ -1,33 +1,29 @@
+import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import { Search, Tag, TrendingUp, MessageCircle } from 'lucide-react'
 import { useSiteStore } from '@/stores/siteStore'
+import { usePostStore } from '@/stores/postStore'
 import { formatDate } from '@/utils/date'
+import type { BlogPost, Tag as TagType } from '@/types'
 
 export default function Sidebar() {
   const store = useSiteStore()
+  const { posts, tags, fetchPosts, fetchTags } = usePostStore()
   const danmaku = store?.danmaku || []
+  const [recommendedPosts, setRecommendedPosts] = useState<BlogPost[]>([])
 
-  // 模拟推荐文章（实际从 API 获取）
-  const recommendedPosts = [
-    { id: '1', title: 'Docker 简介', date: '2019-08-15' },
-    { id: '2', title: 'Spring Boot 入门', date: '2020-03-20' },
-    { id: '3', title: 'Redis 缓存策略', date: '2021-06-10' },
-  ]
+  useEffect(() => {
+    fetchPosts({ page: 1, pageSize: 5 })
+    fetchTags()
+  }, [])
 
-  // 模拟标签云
-  const tags = [
-    { name: 'docker', count: 15 },
-    { name: 'java', count: 28 },
-    { name: 'spring', count: 22 },
-    { name: 'linux', count: 18 },
-    { name: 'mysql', count: 12 },
-    { name: 'redis', count: 10 },
-    { name: 'python', count: 8 },
-    { name: 'nginx', count: 6 },
-    { name: 'vue', count: 14 },
-    { name: 'react', count: 9 },
-  ]
+  // 从文章列表中选取推荐文章（取前3篇）
+  useEffect(() => {
+    if (posts.length > 0) {
+      setRecommendedPosts(posts.slice(0, 3))
+    }
+  }, [posts])
 
   return (
     <aside className="space-y-6">
@@ -70,7 +66,7 @@ export default function Sidebar() {
           {recommendedPosts.map((post) => (
             <Link
               key={post.id}
-              to={`/post/${post.id}`}
+              to={`/post/${post.slug}`}
               className="group block no-underline"
             >
               <p
@@ -80,7 +76,7 @@ export default function Sidebar() {
                 {post.title}
               </p>
               <p className="mt-0.5 text-xs" style={{ color: 'var(--app-muted-text)' }}>
-                {formatDate(post.date)}
+                {formatDate(post.publishedAt)}
               </p>
             </Link>
           ))}
@@ -97,10 +93,10 @@ export default function Sidebar() {
           标签云
         </h3>
         <div className="flex flex-wrap gap-2">
-          {tags.map((tag) => (
+          {tags.slice(0, 10).map((tag) => (
             <Link
-              key={tag.name}
-              to={`/tag/${tag.name}`}
+              key={tag.id}
+              to={`/tag/${tag.slug}`}
               className="rounded-full px-3 py-1 text-xs no-underline transition-all hover:scale-105"
               style={{
                 background: `var(--app-secondary)`,
@@ -109,7 +105,7 @@ export default function Sidebar() {
               }}
             >
               {tag.name}
-              <span className="ml-1 opacity-60">({tag.count})</span>
+              <span className="ml-1 opacity-60">({tag.postCount})</span>
             </Link>
           ))}
         </div>

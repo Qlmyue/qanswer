@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
-import { Plus, Edit, Trash2, Eye, Search } from 'lucide-react'
+import { Plus, Edit, Trash2, Search } from 'lucide-react'
 import type { BlogPost } from '@/types'
 import { postApi } from '@/services'
 import { formatDate } from '@/utils/date'

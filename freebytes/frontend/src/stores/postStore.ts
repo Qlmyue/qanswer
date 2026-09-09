@@ -1,6 +1,6 @@
 import { create } from 'zustand'
-import type { BlogPost, Category, Tag, PaginatedResponse } from '@/types'
-import { postApi, categoryApi } from '@/services'
+import type { BlogPost, Category, Tag } from '@/types'
+import { postApi, categoryApi, tagApi } from '@/services'
 
 // snake_case 转 camelCase
 function toCamelCase(obj: unknown): unknown {
@@ -39,6 +39,7 @@ interface PostState {
   }) => Promise<void>
   fetchPost: (slug: string) => Promise<void>
   fetchCategories: () => Promise<void>
+  fetchTags: () => Promise<void>
   clearCurrentPost: () => void
 }
 
@@ -87,6 +88,15 @@ export const usePostStore = create<PostState>((set) => ({
       set({ categories: toCamelCase(categories) as Category[] })
     } catch (e: unknown) {
       console.error('获取分类失败:', e)
+    }
+  },
+
+  fetchTags: async () => {
+    try {
+      const tags = await tagApi.getTags()
+      set({ tags: toCamelCase(tags) as Tag[] })
+    } catch (e: unknown) {
+      console.error('获取标签失败:', e)
     }
   },
 

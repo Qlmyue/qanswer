@@ -7,7 +7,7 @@ import { formatDate } from '@/utils/date'
 
 export default function CommentManageView() {
   const [comments, setComments] = useState<Comment[]>([])
-  const [loading, setLoading] = useState(false)
+  const [loading] = useState(false)
 
   // 实际应该从 API 获取所有评论，这里简化处理
   useEffect(() => {

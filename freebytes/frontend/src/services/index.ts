@@ -1,5 +1,6 @@
 import { postApi } from './api/post'
 import { categoryApi } from './api/category'
+import { tagApi } from './api/tag'
 import { commentApi } from './api/comment'
 import { guestbookApi } from './api/guestbook'
 import { danmakuApi } from './api/danmaku'
@@ -10,6 +11,7 @@ import { uploadApi } from './api/upload'
 export {
   postApi,
   categoryApi,
+  tagApi,
   commentApi,
   guestbookApi,
   danmakuApi,

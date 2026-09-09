@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { BookOpen, Send, MessageCircle } from 'lucide-react'
+import { Send, MessageCircle } from 'lucide-react'
 import type { GuestbookMessage } from '@/types'
 import { guestbookApi } from '@/services'
 import { formatDate } from '@/utils/date'

@@ -3,7 +3,7 @@ import { useParams, useNavigate } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import { Save, Eye, ArrowLeft } from 'lucide-react'
 import RichEditor from '@/components/editor/RichEditor'
-import type { CreatePostData, Category, Tag } from '@/types'
+import type { CreatePostData, Category } from '@/types'
 import { postApi, categoryApi } from '@/services'
 
 export default function PostEditView() {

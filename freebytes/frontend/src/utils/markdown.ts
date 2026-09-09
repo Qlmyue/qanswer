@@ -7,9 +7,17 @@ import rehypeHighlight from 'rehype-highlight'
 import rehypeRaw from 'rehype-raw'
 
 /**
+ * 去除 YAML frontmatter
+ */
+function stripFrontmatter(markdown: string): string {
+  return markdown.replace(/^---[\s\S]*?---\n*/m, '')
+}
+
+/**
  * 将 Markdown 转换为 HTML
  */
 export async function markdownToHtml(markdown: string): Promise<string> {
+  const cleanMarkdown = stripFrontmatter(markdown)
   const result = await unified()
     .use(remarkParse)
     .use(remarkGfm)
@@ -17,7 +25,7 @@ export async function markdownToHtml(markdown: string): Promise<string> {
     .use(rehypeRaw)
     .use(rehypeHighlight)
     .use(rehypeStringify)
-    .process(markdown)
+    .process(cleanMarkdown)
 
   return String(result)
 }
@@ -33,10 +41,11 @@ export interface TocItem {
 
 export function extractToc(markdown: string): TocItem[] {
   const toc: TocItem[] = []
+  const cleanMarkdown = stripFrontmatter(markdown)
   const headingRegex = /^(#{1,6})\s+(.+)$/gm
   let match
 
-  while ((match = headingRegex.exec(markdown)) !== null) {
+  while ((match = headingRegex.exec(cleanMarkdown)) !== null) {
     const level = match[1].length
     const text = match[2].trim()
     const id = text
@@ -54,9 +63,10 @@ export function extractToc(markdown: string): TocItem[] {
  * 计算字数
  */
 export function countWords(text: string): number {
+  const cleanText = stripFrontmatter(text)
   // 中文按字符计数，英文按单词计数
-  const chineseChars = (text.match(/[一-龥]/g) || []).length
-  const englishWords = text
+  const chineseChars = (cleanText.match(/[一-龥]/g) || []).length
+  const englishWords = cleanText
     .replace(/[一-龥]/g, '')
     .split(/\s+/)
     .filter(w => w.length > 0).length
@@ -67,8 +77,9 @@ export function countWords(text: string): number {
  * 生成摘要（取前 N 个字符）
  */
 export function generateSummary(text: string, maxLength: number = 150): string {
+  const cleanText = stripFrontmatter(text)
   // 去除 Markdown 语法
-  const plainText = text
+  const plainText = cleanText
     .replace(/#{1,6}\s+/g, '')
     .replace(/\*\*(.+?)\*\*/g, '$1')
     .replace(/\*(.+?)\*/g, '$1')

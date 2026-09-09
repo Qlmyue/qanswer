@@ -36,7 +36,7 @@ export const useAuthStore = create<AuthState>()(
         set({ loading: true, error: null })
         try {
           const res = await apiClient.post('/auth/login', { username, password })
-          const { access_token, user } = res as { access_token: string; user: User }
+          const { access_token, user } = res as unknown as { access_token: string; user: User }
           localStorage.setItem('blog_token', access_token)
           set({
             user,
