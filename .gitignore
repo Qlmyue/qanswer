@@ -32,7 +32,7 @@ Thumbs.db
 backend-server.log
 
 # Database (local dev)
-backend/data/*.db
+# backend/data/*.db
 
 # Env files
 .env.local
