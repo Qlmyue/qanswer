@@ -5,6 +5,16 @@ from .practice import PracticeQuestion
 from .challenge import DailyChallenge
 from .report import WeeklyReport
 from .skill import SkillItem
+from .blog import (
+    BlogPost,
+    BlogCategory,
+    BlogTag,
+    BlogComment,
+    BlogGuestbook,
+    BlogDanmaku,
+    BlogFriendLink,
+    BlogSiteConfig,
+)
 
 __all__ = [
     "User",
@@ -13,4 +23,12 @@ __all__ = [
     "DailyChallenge",
     "WeeklyReport",
     "SkillItem",
+    "BlogPost",
+    "BlogCategory",
+    "BlogTag",
+    "BlogComment",
+    "BlogGuestbook",
+    "BlogDanmaku",
+    "BlogFriendLink",
+    "BlogSiteConfig",
 ]

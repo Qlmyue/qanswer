@@ -1,13 +1,15 @@
 """
 FastAPI 主应用入口
 """
+import os
 from contextlib import asynccontextmanager
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.staticfiles import StaticFiles
 
 from src.core.config import get_settings
 from src.core.database import init_db
-from src.api import auth, review, practice, challenge, skill, report, dashboard, ai
+from src.api import auth, review, practice, challenge, skill, report, dashboard, ai, blog
 
 settings = get_settings()
 
@@ -49,6 +51,17 @@ app.include_router(skill.router)
 app.include_router(report.router)
 app.include_router(dashboard.router)
 app.include_router(ai.router)
+app.include_router(blog.router)
+
+# 静态文件服务（暂时注释掉，避免路由冲突）
+# freebytes_dir = os.path.join(os.path.dirname(os.path.dirname(__file__)), "freebytes")
+# content_dir = os.path.join(freebytes_dir, "content")
+# uploads_dir = os.path.join(freebytes_dir, "uploads")
+
+# if os.path.exists(content_dir):
+#     app.mount("/blog/content", StaticFiles(directory=content_dir), name="blog-content")
+# if os.path.exists(uploads_dir):
+#     app.mount("/blog/uploads", StaticFiles(directory=uploads_dir), name="blog-uploads")
 
 
 @app.get("/")
