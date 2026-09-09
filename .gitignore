@@ -1,0 +1,46 @@
+# Dependencies
+node_modules/
+.pnp
+.pnp.js
+
+# Build output
+dist/
+build/
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.env
+.venv/
+venv/
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+backend-server.log
+
+# Database (local dev)
+backend/data/*.db
+
+# Env files
+.env.local
+.env.*.local
+
+# Vite
+*.local
+
+# Hugo
+freebytes/public/
+freebytes/resources/_gen/
